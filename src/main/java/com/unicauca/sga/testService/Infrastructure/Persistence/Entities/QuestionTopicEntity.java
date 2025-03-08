@@ -1,4 +1,4 @@
-package com.unicauca.sga.testService.Domain.Entities;
+package com.unicauca.sga.testService.Infrastructure.Persistence.Entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "QuestionTopic")
-public class QuestionTopic {
+public class QuestionTopicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int question_topic_id;

@@ -1,9 +1,8 @@
 package com.unicauca.sga.testService.Aplication.Services;
 
-import com.unicauca.sga.testService.Domain.IServices.IQuestionTopicService;
-import com.unicauca.sga.testService.Domain.Entities.QuestionTopic;
-import com.unicauca.sga.testService.Domain.Repositories.QuestionTopicRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.unicauca.sga.testService.Domain.Model.QuestionTopic;
+import com.unicauca.sga.testService.Domain.Ports.Repositories.IQuestionTopicRepository;
+import com.unicauca.sga.testService.Domain.Ports.Services.IQuestionTopicService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,18 +10,18 @@ import java.util.List;
 @Service
 public class QuestionTopicService implements IQuestionTopicService {
 
-    @Autowired
-    private QuestionTopicRepository questionTopicRepository;
+    private IQuestionTopicRepository questionTopicRepository;
+
+    public QuestionTopicService(IQuestionTopicRepository questionTopicRepository) {
+        this.questionTopicRepository = questionTopicRepository;
+    }
 
     public List<QuestionTopic> getAllQuestionTopics(){
         return (List<QuestionTopic>) questionTopicRepository.findAll();
     }
 
     public QuestionTopic getQuestionTopicById(int id){
-        if(questionTopicRepository.findById(id).isPresent()){
-            return questionTopicRepository.findById(id).get();
-        }
-        return null;
+        return questionTopicRepository.findById(id);
     }
 
     public void saveQuestionTopic(QuestionTopic questionTopic){

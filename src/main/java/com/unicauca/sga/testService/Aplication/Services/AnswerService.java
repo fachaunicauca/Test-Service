@@ -1,9 +1,8 @@
 package com.unicauca.sga.testService.Aplication.Services;
 
-import com.unicauca.sga.testService.Domain.IServices.IAnswerService;
-import com.unicauca.sga.testService.Domain.Entities.Answer;
-import com.unicauca.sga.testService.Domain.Repositories.AnswerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.unicauca.sga.testService.Domain.Model.Answer;
+import com.unicauca.sga.testService.Domain.Ports.Repositories.IAnswerRepository;
+import com.unicauca.sga.testService.Domain.Ports.Services.IAnswerService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,18 +10,19 @@ import java.util.List;
 @Service
 public class AnswerService implements IAnswerService {
 
-    @Autowired
-    private AnswerRepository answerRepository;
+
+    private IAnswerRepository answerRepository;
+
+    public AnswerService(IAnswerRepository answerRepository) {
+        this.answerRepository = answerRepository;
+    }
 
     public List<Answer> getAllAnswers(){
         return (List<Answer>) answerRepository.findAll();
     }
 
     public Answer getAnswerById(long id){
-        if(answerRepository.findById(id).isPresent()){
-            return answerRepository.findById(id).get();
-        }
-        return null;
+        return answerRepository.findById(id);
     }
 
     public void saveAnswer(Answer answer){

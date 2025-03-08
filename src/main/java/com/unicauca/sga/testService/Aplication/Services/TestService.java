@@ -1,9 +1,8 @@
 package com.unicauca.sga.testService.Aplication.Services;
 
-import com.unicauca.sga.testService.Domain.IServices.ITestService;
-import com.unicauca.sga.testService.Domain.Entities.Test;
-import com.unicauca.sga.testService.Domain.Repositories.TestRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.unicauca.sga.testService.Domain.Model.Test;
+import com.unicauca.sga.testService.Domain.Ports.Repositories.ITestRepository;
+import com.unicauca.sga.testService.Domain.Ports.Services.ITestService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,18 +10,18 @@ import java.util.List;
 @Service
 public class TestService implements ITestService {
 
-    @Autowired
-    private TestRepository testRepository;
+    private ITestRepository testRepository;
+
+    public TestService(ITestRepository testRepository) {
+        this.testRepository = testRepository;
+    }
 
     public List<Test> getAllTests(){
         return testRepository.findAll();
     }
 
     public Test getTestById(long id){
-        if(testRepository.findById(id).isPresent()){
-            return testRepository.findById(id).get();
-        }
-        return null;
+        return testRepository.findById(id);
     }
 
     public void saveTest(Test test){

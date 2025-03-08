@@ -1,9 +1,8 @@
 package com.unicauca.sga.testService.Aplication.Services;
 
-import com.unicauca.sga.testService.Domain.IServices.ISubjectService;
-import com.unicauca.sga.testService.Domain.Entities.Subject;
-import com.unicauca.sga.testService.Domain.Repositories.SubjectRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.unicauca.sga.testService.Domain.Model.Subject;
+import com.unicauca.sga.testService.Domain.Ports.Repositories.ISubjectRepository;
+import com.unicauca.sga.testService.Domain.Ports.Services.ISubjectService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,18 +10,18 @@ import java.util.List;
 @Service
 public class SubjectService implements ISubjectService {
 
-    @Autowired
-    private SubjectRepository subjectRepository;
+    private ISubjectRepository subjectRepository;
+
+    public SubjectService(ISubjectRepository subjectRepository) {
+        this.subjectRepository = subjectRepository;
+    }
 
     public List<Subject> getAllSubjects(){
         return (List<Subject>) subjectRepository.findAll();
     }
 
     public Subject getSubjectById(String id){
-        if(subjectRepository.findById(id).isPresent()){
-            return subjectRepository.findById(id).get();
-        }
-        return null;
+        return subjectRepository.findById(id);
     }
 
     public void saveSubject(Subject subject){

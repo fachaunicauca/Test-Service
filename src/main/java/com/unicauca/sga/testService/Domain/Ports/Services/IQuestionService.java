@@ -1,6 +1,6 @@
-package com.unicauca.sga.testService.Domain.IServices;
+package com.unicauca.sga.testService.Domain.Ports.Services;
 
-import com.unicauca.sga.testService.Domain.Entities.Question;
+import com.unicauca.sga.testService.Domain.Model.Question;
 
 import java.util.List;
 
