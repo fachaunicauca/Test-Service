@@ -16,26 +16,32 @@ public class QuestionTopicService implements IQuestionTopicService {
         this.questionTopicRepository = questionTopicRepository;
     }
 
+    @Override
     public List<QuestionTopic> getAllQuestionTopics(){
         return (List<QuestionTopic>) questionTopicRepository.findAll();
     }
 
+    @Override
     public QuestionTopic getQuestionTopicById(int id){
         return questionTopicRepository.findById(id);
     }
 
+    @Override
     public void saveQuestionTopic(QuestionTopic questionTopic){
         questionTopicRepository.save(questionTopic);
     }
 
+    @Override
     public void deleteQuestionTopic(QuestionTopic questionTopic){
         questionTopicRepository.delete(questionTopic);
     }
 
+    @Override
     public void deleteQuestionTopicById(int id){
         questionTopicRepository.deleteById(id);
     }
 
+    @Override
     public void updateQuestionTopic(QuestionTopic questionTopic){
         questionTopicRepository.save(questionTopic);
     }

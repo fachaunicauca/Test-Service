@@ -16,26 +16,32 @@ public class TestService implements ITestService {
         this.testRepository = testRepository;
     }
 
+    @Override
     public List<Test> getAllTests(){
         return testRepository.findAll();
     }
 
+    @Override
     public Test getTestById(long id){
         return testRepository.findById(id);
     }
 
+    @Override
     public void saveTest(Test test){
         testRepository.save(test);
     }
 
+    @Override
     public void deleteTest(Test test){
         testRepository.delete(test);
     }
 
+    @Override
     public void deleteTestById(long id){
         testRepository.deleteById(id);
     }
 
+    @Override
     public void updateTest(Test test){
         testRepository.save(test);
     }

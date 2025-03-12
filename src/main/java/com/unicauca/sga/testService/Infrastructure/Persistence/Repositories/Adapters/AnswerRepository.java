@@ -2,35 +2,39 @@ package com.unicauca.sga.testService.Infrastructure.Persistence.Repositories.Ada
 
 import com.unicauca.sga.testService.Domain.Model.Answer;
 import com.unicauca.sga.testService.Domain.Ports.Repositories.IAnswerRepository;
+import com.unicauca.sga.testService.Infrastructure.Mappers.AnswerMapper;
 import com.unicauca.sga.testService.Infrastructure.Persistence.Repositories.AnswerJpaRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AnswerRepository implements IAnswerRepository {
     private final AnswerJpaRepository answerJpaRepository;
+    private final AnswerMapper answerMapper;
 
-    public AnswerRepository (AnswerJpaRepository answerJpaRepository){
+    public AnswerRepository (AnswerJpaRepository answerJpaRepository, AnswerMapper answerMapper){
         this.answerJpaRepository=answerJpaRepository;
+        this.answerMapper=answerMapper;
     }
 
     @Override
     public List<Answer> findAll() {
-        return answerJpaRepository.findAll();
+        return answerJpaRepository.findAll().stream().map(answerMapper::toModel).collect(Collectors.toList());
     }
 
     @Override
     public Answer findById(long id) {
-        return answerJpaRepository.findById(id).get();
+        return answerMapper.toModel(answerJpaRepository.findById(id).get());
     }
 
     @Override
     public void save(Answer answer) {
-        answerJpaRepository.save(answer);
+        answerJpaRepository.save(answerMapper.toInfra(answer));
     }
 
     @Override
     public void delete(Answer answer) {
-        answerJpaRepository.delete(answer);
+        answerJpaRepository.delete(answerMapper.toInfra(answer));
     }
 
     @Override
@@ -40,7 +44,7 @@ public class AnswerRepository implements IAnswerRepository {
 
     @Override
     public List<Answer> findByQuestionId(long id) {
-        return answerJpaRepository.findByQuestionId(id);
+        return answerJpaRepository.findByQuestionId(id).stream().map(answerMapper::toModel).collect(Collectors.toList());
     }
 
     @Override

@@ -2,36 +2,40 @@ package com.unicauca.sga.testService.Infrastructure.Persistence.Repositories.Ada
 
 import com.unicauca.sga.testService.Domain.Model.QuestionTopic;
 import com.unicauca.sga.testService.Domain.Ports.Repositories.IQuestionTopicRepository;
+import com.unicauca.sga.testService.Infrastructure.Mappers.QuestionTopicMapper;
 import com.unicauca.sga.testService.Infrastructure.Persistence.Repositories.QuestionTopicJpaRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class QuestionTopicRepository implements IQuestionTopicRepository {
     private final QuestionTopicJpaRepository questionTopicJpaRepository;
+    private final QuestionTopicMapper questionTopicMapper;
 
-    public QuestionTopicRepository (QuestionTopicJpaRepository questionTopicJpaRepository){
+    public QuestionTopicRepository (QuestionTopicJpaRepository questionTopicJpaRepository, QuestionTopicMapper questionTopicMapper){
         this.questionTopicJpaRepository=questionTopicJpaRepository;
+        this.questionTopicMapper=questionTopicMapper;
     }
 
 
     @Override
     public List<QuestionTopic> findAll() {
-        return questionTopicJpaRepository.findAll();
+        return questionTopicJpaRepository.findAll().stream().map(questionTopicMapper::toModel).collect(Collectors.toList());
     }
 
     @Override
     public QuestionTopic findById(int id) {
-        return questionTopicJpaRepository.findById(id).get();
+        return questionTopicMapper.toModel(questionTopicJpaRepository.findById(id).get());
     }
 
     @Override
     public void save(QuestionTopic questionTopic) {
-        questionTopicJpaRepository.save(questionTopic);
+        questionTopicJpaRepository.save(questionTopicMapper.toInfra(questionTopic));
     }
 
     @Override
     public void delete(QuestionTopic questionTopic) {
-        questionTopicJpaRepository.delete(questionTopic);
+        questionTopicJpaRepository.delete(questionTopicMapper.toInfra(questionTopic));
     }
 
     @Override

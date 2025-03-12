@@ -1,4 +1,4 @@
-package com.unicauca.sga.testService.Infrastructure.Persistence.Entities;
+package com.unicauca.sga.testService.Infrastructure.Persistence.Tables;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "Subject")
-public class SubjectEntity {
+public class SubjectTable {
     @Id
     private String subject_name;
 }

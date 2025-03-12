@@ -16,26 +16,32 @@ public class SubjectService implements ISubjectService {
         this.subjectRepository = subjectRepository;
     }
 
+    @Override
     public List<Subject> getAllSubjects(){
         return (List<Subject>) subjectRepository.findAll();
     }
 
+    @Override
     public Subject getSubjectById(String id){
         return subjectRepository.findById(id);
     }
 
+    @Override
     public void saveSubject(Subject subject){
         subjectRepository.save(subject);
     }
 
+    @Override
     public void deleteSubject(Subject subject){
         subjectRepository.delete(subject);
     }
 
+    @Override
     public void deleteSubjectById(String id){
         subjectRepository.deleteById(id);
     }
 
+    @Override
     public void updateSubject(Subject subject){
         subjectRepository.save(subject);
     }

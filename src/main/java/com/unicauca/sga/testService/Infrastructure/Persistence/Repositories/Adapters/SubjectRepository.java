@@ -2,35 +2,39 @@ package com.unicauca.sga.testService.Infrastructure.Persistence.Repositories.Ada
 
 import com.unicauca.sga.testService.Domain.Model.Subject;
 import com.unicauca.sga.testService.Domain.Ports.Repositories.ISubjectRepository;
+import com.unicauca.sga.testService.Infrastructure.Mappers.SubjectMapper;
 import com.unicauca.sga.testService.Infrastructure.Persistence.Repositories.SubjectJpaRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SubjectRepository implements ISubjectRepository {
     private final SubjectJpaRepository subjectJpaRepository;
+    private final SubjectMapper subjectMapper;
 
-    public SubjectRepository (SubjectJpaRepository subjectJpaRepository){
+    public SubjectRepository (SubjectJpaRepository subjectJpaRepository, SubjectMapper subjectMapper){
         this.subjectJpaRepository=subjectJpaRepository;
+        this.subjectMapper=subjectMapper;
     }
 
     @Override
     public List<Subject> findAll() {
-        return subjectJpaRepository.findAll();
+        return subjectJpaRepository.findAll().stream().map(subjectMapper::toModel).collect(Collectors.toList());
     }
 
     @Override
     public Subject findById(String id) {
-        return subjectJpaRepository.findById(id).get();
+        return subjectMapper.toModel(subjectJpaRepository.findById(id).get());
     }
 
     @Override
     public void save(Subject subject) {
-        subjectJpaRepository.save(subject);
+        subjectJpaRepository.save(subjectMapper.toInfra(subject));
     }
 
     @Override
     public void delete(Subject subject) {
-        subjectJpaRepository.delete(subject);
+        subjectJpaRepository.delete(subjectMapper.toInfra(subject));
     }
 
     @Override

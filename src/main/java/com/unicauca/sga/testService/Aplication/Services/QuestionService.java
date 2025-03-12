@@ -16,30 +16,37 @@ public class QuestionService implements IQuestionService {
         this.questionRepository = questionRepository;
     }
 
+    @Override
     public List<Question> getAllQuestions(){
         return (List<Question>) questionRepository.findAll();
     }
 
+    @Override
     public Question getQuestionById(long id){
         return questionRepository.findById(id);
     }
 
+    @Override
     public void saveQuestion(Question question){
         questionRepository.save(question);
     }
 
+    @Override
     public void deleteQuestion(Question question){
         questionRepository.delete(question);
     }
 
+    @Override
     public void deleteQuestionById(long id){
         questionRepository.deleteById(id);
     }
 
+    @Override
     public void updateQuestion(Question question){
         questionRepository.save(question);
     }
 
+    @Override
     public List<Question> getRandomQuestions(int n){
         return questionRepository.findRandom(n);
     }

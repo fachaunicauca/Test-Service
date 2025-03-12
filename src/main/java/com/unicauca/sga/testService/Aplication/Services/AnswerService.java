@@ -17,34 +17,42 @@ public class AnswerService implements IAnswerService {
         this.answerRepository = answerRepository;
     }
 
+    @Override
     public List<Answer> getAllAnswers(){
         return (List<Answer>) answerRepository.findAll();
     }
 
+    @Override
     public Answer getAnswerById(long id){
         return answerRepository.findById(id);
     }
 
+    @Override
     public void saveAnswer(Answer answer){
         answerRepository.save(answer);
     }
 
+    @Override
     public void deleteAnswer(Answer answer){
         answerRepository.delete(answer);
     }
 
+    @Override
     public void deleteAnswerById(long id){
         answerRepository.deleteById(id);
     }
 
+    @Override
     public void updateAnswer(Answer answer){
         answerRepository.save(answer);
     }
 
+    @Override
     public List<Answer> getAllAnswersByQuestion(long q_id) {
         return answerRepository.findByQuestionId(q_id);
     }
 
+    @Override
     public boolean answerIsCorrect(long id){
         return answerRepository.isCorrect(id);
     }

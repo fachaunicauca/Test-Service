@@ -1,4 +1,4 @@
-package com.unicauca.sga.testService.Infrastructure.Persistence.Entities;
+package com.unicauca.sga.testService.Infrastructure.Persistence.Tables;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -8,7 +8,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "Test")
-public class TestEntity {
+public class TestTable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long test_id;
@@ -24,7 +24,7 @@ public class TestEntity {
 
     @ManyToOne
     @JoinColumn(name = "subject_name", table = "Subject")
-    private SubjectEntity subject;
+    private SubjectTable subject;
 
     @Column
     private Date test_date;

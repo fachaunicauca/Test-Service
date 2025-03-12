@@ -1,4 +1,4 @@
-package com.unicauca.sga.testService.Infrastructure.Persistence.Entities;
+package com.unicauca.sga.testService.Infrastructure.Persistence.Tables;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "Question")
-public class QuestionEntity {
+public class QuestionTable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,11 +14,11 @@ public class QuestionEntity {
 
     @ManyToOne
     @JoinColumn(name = "question_topic_id", table = "QuestionTopic")
-    private QuestionTopicEntity questionTopic;
+    private QuestionTopicTable questionTopic;
 
     @ManyToOne
     @JoinColumn(name = "subject_name", table = "Subject")
-    private SubjectEntity subject;
+    private SubjectTable subject;
 
     @Column
     private String question_title;
