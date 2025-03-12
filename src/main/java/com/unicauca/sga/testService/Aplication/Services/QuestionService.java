@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class QuestionService implements IQuestionService {
 
-    private IQuestionRepository questionRepository;
+    private final IQuestionRepository questionRepository;
 
     public QuestionService(IQuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
@@ -38,5 +38,9 @@ public class QuestionService implements IQuestionService {
 
     public void updateQuestion(Question question){
         questionRepository.save(question);
+    }
+
+    public List<Question> getRandomQuestions(int n){
+        return questionRepository.findRandom(n);
     }
 }

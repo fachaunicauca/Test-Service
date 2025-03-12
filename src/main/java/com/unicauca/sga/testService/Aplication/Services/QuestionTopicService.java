@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class QuestionTopicService implements IQuestionTopicService {
 
-    private IQuestionTopicRepository questionTopicRepository;
+    private final IQuestionTopicRepository questionTopicRepository;
 
     public QuestionTopicService(IQuestionTopicRepository questionTopicRepository) {
         this.questionTopicRepository = questionTopicRepository;

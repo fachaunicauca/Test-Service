@@ -1,4 +1,4 @@
-package com.unicauca.sga.testService.Domain.DTOs;
+package com.unicauca.sga.testService.Domain.Model.DTOs;
 
 import lombok.Data;
 

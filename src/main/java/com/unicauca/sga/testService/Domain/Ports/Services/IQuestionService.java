@@ -11,5 +11,5 @@ public interface IQuestionService {
     void deleteQuestion(Question question);
     void deleteQuestionById(long id);
     void updateQuestion(Question question);
-
+    List<Question> getRandomQuestions(int n);
 }

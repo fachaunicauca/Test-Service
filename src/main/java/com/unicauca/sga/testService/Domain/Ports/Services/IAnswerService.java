@@ -11,5 +11,6 @@ public interface IAnswerService {
     void deleteAnswer(Answer answer);
     void deleteAnswerById(long id);
     void updateAnswer(Answer answer);
+    List<Answer> getAllAnswersByQuestion(long q_id);
     boolean answerIsCorrect(long id);
 }

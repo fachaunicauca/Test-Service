@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class TestService implements ITestService {
 
-    private ITestRepository testRepository;
+    private final ITestRepository testRepository;
 
     public TestService(ITestRepository testRepository) {
         this.testRepository = testRepository;

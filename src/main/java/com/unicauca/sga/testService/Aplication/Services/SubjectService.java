@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class SubjectService implements ISubjectService {
 
-    private ISubjectRepository subjectRepository;
+    private final ISubjectRepository subjectRepository;
 
     public SubjectService(ISubjectRepository subjectRepository) {
         this.subjectRepository = subjectRepository;

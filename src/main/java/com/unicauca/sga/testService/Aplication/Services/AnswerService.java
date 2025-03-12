@@ -11,7 +11,7 @@ import java.util.List;
 public class AnswerService implements IAnswerService {
 
 
-    private IAnswerRepository answerRepository;
+    private final IAnswerRepository answerRepository;
 
     public AnswerService(IAnswerRepository answerRepository) {
         this.answerRepository = answerRepository;
@@ -39,6 +39,10 @@ public class AnswerService implements IAnswerService {
 
     public void updateAnswer(Answer answer){
         answerRepository.save(answer);
+    }
+
+    public List<Answer> getAllAnswersByQuestion(long q_id) {
+        return answerRepository.findByQuestionId(q_id);
     }
 
     public boolean answerIsCorrect(long id){

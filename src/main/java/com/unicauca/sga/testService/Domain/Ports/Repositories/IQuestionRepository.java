@@ -11,4 +11,5 @@ public interface IQuestionRepository {
     void save(Question question);
     void delete(Question question);
     void deleteById(long id);
+    List<Question> findRandom(int n);
 }
