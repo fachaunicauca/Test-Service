@@ -2,12 +2,14 @@ package com.unicauca.sga.testService.Infrastructure.Persistence.Repositories.Ada
 
 import com.unicauca.sga.testService.Domain.Model.Test;
 import com.unicauca.sga.testService.Domain.Ports.Repositories.ITestRepository;
-import com.unicauca.sga.testService.Infrastructure.Mappers.TestMapper;
+import com.unicauca.sga.testService.Infrastructure.Persistence.Mappers.TestMapper;
 import com.unicauca.sga.testService.Infrastructure.Persistence.Repositories.TestJpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Repository
 public class TestRepository implements ITestRepository {
     private final TestJpaRepository testJpaRepository;
     private final TestMapper testMapper;
@@ -40,5 +42,10 @@ public class TestRepository implements ITestRepository {
     @Override
     public void deleteById(long id) {
         testJpaRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isPresent(long id) {
+        return testJpaRepository.existsById(id);
     }
 }

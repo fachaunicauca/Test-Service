@@ -11,4 +11,6 @@ public interface IQuestionTopicService {
     void deleteQuestionTopic(QuestionTopic questionTopic);
     void deleteQuestionTopicById(int id);
     void updateQuestionTopic(QuestionTopic questionTopic);
+    boolean isPresent(int id);
+
 }

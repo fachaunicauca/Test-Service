@@ -10,4 +10,5 @@ public interface ITestRepository {
     void save(Test test);
     void delete(Test test);
     void deleteById(long id);
+    boolean isPresent(long id);
 }

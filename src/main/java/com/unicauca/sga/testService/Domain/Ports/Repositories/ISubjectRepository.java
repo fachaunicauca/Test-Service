@@ -10,4 +10,5 @@ public interface ISubjectRepository {
     void save(Subject subject);
     void delete(Subject subject);
     void deleteById(String id);
+    boolean isPresent(String id);
 }

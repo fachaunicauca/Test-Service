@@ -10,4 +10,5 @@ public interface IQuestionTopicRepository {
     void save(QuestionTopic questionTopic);
     void delete(QuestionTopic questionTopic);
     void deleteById(int id);
+    boolean isPresent(int id);
 }

@@ -11,4 +11,5 @@ public interface ISubjectService {
     void deleteSubject(Subject subject);
     void deleteSubjectById(String id);
     void updateSubject(Subject subject);
+    boolean isPresent(String id);
 }

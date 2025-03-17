@@ -3,6 +3,7 @@ package com.unicauca.sga.testService.Aplication.Services;
 import com.unicauca.sga.testService.Domain.Model.Question;
 import com.unicauca.sga.testService.Domain.Ports.Repositories.IQuestionRepository;
 import com.unicauca.sga.testService.Domain.Ports.Services.IQuestionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public class QuestionService implements IQuestionService {
 
     private final IQuestionRepository questionRepository;
 
+    @Autowired
     public QuestionService(IQuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
     }
@@ -47,7 +49,12 @@ public class QuestionService implements IQuestionService {
     }
 
     @Override
-    public List<Question> getRandomQuestions(int n){
-        return questionRepository.findRandom(n);
+    public List<Question> getRandomQuestionsBySubject(String subject_name, int n){
+        return questionRepository.findRandomBySubject(subject_name,n);
+    }
+
+    @Override
+    public boolean isPresent(long id) {
+        return questionRepository.isPresent(id);
     }
 }

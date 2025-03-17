@@ -2,12 +2,14 @@ package com.unicauca.sga.testService.Infrastructure.Persistence.Repositories.Ada
 
 import com.unicauca.sga.testService.Domain.Model.Answer;
 import com.unicauca.sga.testService.Domain.Ports.Repositories.IAnswerRepository;
-import com.unicauca.sga.testService.Infrastructure.Mappers.AnswerMapper;
+import com.unicauca.sga.testService.Infrastructure.Persistence.Mappers.AnswerMapper;
 import com.unicauca.sga.testService.Infrastructure.Persistence.Repositories.AnswerJpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Repository
 public class AnswerRepository implements IAnswerRepository {
     private final AnswerJpaRepository answerJpaRepository;
     private final AnswerMapper answerMapper;
@@ -50,5 +52,10 @@ public class AnswerRepository implements IAnswerRepository {
     @Override
     public boolean isCorrect(long id) {
         return answerJpaRepository.isCorrect(id);
+    }
+
+    @Override
+    public boolean isPresent(long id) {
+        return answerJpaRepository.existsById(id);
     }
 }

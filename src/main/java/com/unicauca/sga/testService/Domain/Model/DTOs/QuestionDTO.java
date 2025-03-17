@@ -10,6 +10,5 @@ public class QuestionDTO {
     private String question_title;
     private String question_text;
     private String question_image;
-    private int number_of_answers;
     private List<AnswerDTO> answers;
 }

@@ -11,5 +11,6 @@ public interface IQuestionRepository {
     void save(Question question);
     void delete(Question question);
     void deleteById(long id);
-    List<Question> findRandom(int n);
+    List<Question> findRandomBySubject(String subject_name, int n);
+    boolean isPresent(long id);
 }

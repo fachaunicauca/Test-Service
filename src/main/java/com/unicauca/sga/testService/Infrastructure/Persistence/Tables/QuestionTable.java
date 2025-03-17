@@ -17,7 +17,7 @@ public class QuestionTable {
     private QuestionTopicTable questionTopic;
 
     @ManyToOne
-    @JoinColumn(name = "subject_name", table = "Subject")
+    @JoinColumn(name = "subject_name", table = "Subject", nullable = false)
     private SubjectTable subject;
 
     @Column

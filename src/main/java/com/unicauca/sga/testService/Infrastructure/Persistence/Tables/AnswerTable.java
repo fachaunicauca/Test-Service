@@ -13,7 +13,7 @@ public class AnswerTable {
     private Long answer_id;
 
     @ManyToOne
-    @JoinColumn(name = "question_id", table = "Question")
+    @JoinColumn(name = "question_id", table = "Question", nullable = false)
     private Long question_id;
 
     @Column

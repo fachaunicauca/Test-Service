@@ -2,12 +2,14 @@ package com.unicauca.sga.testService.Infrastructure.Persistence.Repositories.Ada
 
 import com.unicauca.sga.testService.Domain.Model.Question;
 import com.unicauca.sga.testService.Domain.Ports.Repositories.IQuestionRepository;
-import com.unicauca.sga.testService.Infrastructure.Mappers.QuestionMapper;
+import com.unicauca.sga.testService.Infrastructure.Persistence.Mappers.QuestionMapper;
 import com.unicauca.sga.testService.Infrastructure.Persistence.Repositories.QuestionJpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Repository
 public class QuestionRepository implements IQuestionRepository {
     private final QuestionJpaRepository questionJpaRepository;
     private final QuestionMapper questionMapper;
@@ -43,7 +45,12 @@ public class QuestionRepository implements IQuestionRepository {
     }
 
     @Override
-    public List<Question> findRandom(int n) {
-        return questionJpaRepository.findRandom(n).stream().map(questionMapper::toModel).collect(Collectors.toList());
+    public List<Question> findRandomBySubject(String subject_name, int n) {
+        return questionJpaRepository.findRandomBySubject(subject_name,n).stream().map(questionMapper::toModel).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean isPresent(long id) {
+        return questionJpaRepository.existsById(id);
     }
 }

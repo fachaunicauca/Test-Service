@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface QuestionJpaRepository extends JpaRepository<QuestionTable, Long> {
-    @Query("SELECT * FROM Question ORDER BY RAND() LIMIT :n")
-    List<QuestionTable> findRandom(@Param("n") int n);
+    @Query("SELECT * FROM Question ORDER BY RAND() WHERE subject_name=:subject_name LIMIT :n")
+    List<QuestionTable> findRandomBySubject(@Param("n") String subject_name, @Param("n") int n);
 }

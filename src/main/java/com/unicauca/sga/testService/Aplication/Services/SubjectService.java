@@ -3,6 +3,7 @@ package com.unicauca.sga.testService.Aplication.Services;
 import com.unicauca.sga.testService.Domain.Model.Subject;
 import com.unicauca.sga.testService.Domain.Ports.Repositories.ISubjectRepository;
 import com.unicauca.sga.testService.Domain.Ports.Services.ISubjectService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public class SubjectService implements ISubjectService {
 
     private final ISubjectRepository subjectRepository;
 
+    @Autowired
     public SubjectService(ISubjectRepository subjectRepository) {
         this.subjectRepository = subjectRepository;
     }
@@ -44,5 +46,10 @@ public class SubjectService implements ISubjectService {
     @Override
     public void updateSubject(Subject subject){
         subjectRepository.save(subject);
+    }
+
+    @Override
+    public boolean isPresent(String id) {
+        return subjectRepository.isPresent(id);
     }
 }

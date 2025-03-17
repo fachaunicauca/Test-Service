@@ -3,6 +3,7 @@ package com.unicauca.sga.testService.Aplication.Services;
 import com.unicauca.sga.testService.Domain.Model.QuestionTopic;
 import com.unicauca.sga.testService.Domain.Ports.Repositories.IQuestionTopicRepository;
 import com.unicauca.sga.testService.Domain.Ports.Services.IQuestionTopicService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public class QuestionTopicService implements IQuestionTopicService {
 
     private final IQuestionTopicRepository questionTopicRepository;
 
+    @Autowired
     public QuestionTopicService(IQuestionTopicRepository questionTopicRepository) {
         this.questionTopicRepository = questionTopicRepository;
     }
@@ -44,5 +46,10 @@ public class QuestionTopicService implements IQuestionTopicService {
     @Override
     public void updateQuestionTopic(QuestionTopic questionTopic){
         questionTopicRepository.save(questionTopic);
+    }
+
+    @Override
+    public boolean isPresent(int id) {
+        return questionTopicRepository.isPresent(id);
     }
 }

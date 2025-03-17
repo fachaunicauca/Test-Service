@@ -12,4 +12,5 @@ public interface ITestService {
     void deleteTest(Test test);
     void deleteTestById(long id);
     void updateTest(Test test);
+    boolean isPresent(long id);
 }

@@ -11,5 +11,6 @@ public interface IQuestionService {
     void deleteQuestion(Question question);
     void deleteQuestionById(long id);
     void updateQuestion(Question question);
-    List<Question> getRandomQuestions(int n);
+    List<Question> getRandomQuestionsBySubject(String subject_name, int n);
+    boolean isPresent(long id);
 }

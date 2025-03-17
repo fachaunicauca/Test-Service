@@ -23,10 +23,10 @@ public class TestTable {
     private Long student_id;
 
     @ManyToOne
-    @JoinColumn(name = "subject_name", table = "Subject")
+    @JoinColumn(name = "subject_name", table = "Subject", nullable = false)
     private SubjectTable subject;
 
-    @Column
+    @Column(nullable = false)
     private Date test_date;
 
     @Column

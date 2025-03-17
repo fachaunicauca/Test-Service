@@ -2,12 +2,14 @@ package com.unicauca.sga.testService.Infrastructure.Persistence.Repositories.Ada
 
 import com.unicauca.sga.testService.Domain.Model.QuestionTopic;
 import com.unicauca.sga.testService.Domain.Ports.Repositories.IQuestionTopicRepository;
-import com.unicauca.sga.testService.Infrastructure.Mappers.QuestionTopicMapper;
+import com.unicauca.sga.testService.Infrastructure.Persistence.Mappers.QuestionTopicMapper;
 import com.unicauca.sga.testService.Infrastructure.Persistence.Repositories.QuestionTopicJpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Repository
 public class QuestionTopicRepository implements IQuestionTopicRepository {
     private final QuestionTopicJpaRepository questionTopicJpaRepository;
     private final QuestionTopicMapper questionTopicMapper;
@@ -41,5 +43,10 @@ public class QuestionTopicRepository implements IQuestionTopicRepository {
     @Override
     public void deleteById(int id) {
         questionTopicJpaRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isPresent(int id) {
+        return questionTopicJpaRepository.existsById(id);
     }
 }

@@ -13,4 +13,5 @@ public interface IAnswerService {
     void updateAnswer(Answer answer);
     List<Answer> getAllAnswersByQuestion(long q_id);
     boolean answerIsCorrect(long id);
+    boolean isPresent(long id);
 }

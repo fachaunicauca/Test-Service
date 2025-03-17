@@ -3,6 +3,7 @@ package com.unicauca.sga.testService.Aplication.Services;
 import com.unicauca.sga.testService.Domain.Model.Answer;
 import com.unicauca.sga.testService.Domain.Ports.Repositories.IAnswerRepository;
 import com.unicauca.sga.testService.Domain.Ports.Services.IAnswerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,9 +11,9 @@ import java.util.List;
 @Service
 public class AnswerService implements IAnswerService {
 
-
     private final IAnswerRepository answerRepository;
 
+    @Autowired
     public AnswerService(IAnswerRepository answerRepository) {
         this.answerRepository = answerRepository;
     }
@@ -55,5 +56,10 @@ public class AnswerService implements IAnswerService {
     @Override
     public boolean answerIsCorrect(long id){
         return answerRepository.isCorrect(id);
+    }
+
+    @Override
+    public boolean isPresent(long id) {
+        return answerRepository.isPresent(id);
     }
 }
