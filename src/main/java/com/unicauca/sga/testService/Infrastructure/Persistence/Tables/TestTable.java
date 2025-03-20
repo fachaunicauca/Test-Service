@@ -22,6 +22,9 @@ public class TestTable {
     @Column
     private Long student_id;
 
+    @Column
+    private int num_of_questions;
+
     @ManyToOne
     @JoinColumn(name = "subject_name", table = "Subject", nullable = false)
     private SubjectTable subject;
