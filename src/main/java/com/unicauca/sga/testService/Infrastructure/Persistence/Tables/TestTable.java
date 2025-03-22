@@ -3,7 +3,7 @@ package com.unicauca.sga.testService.Infrastructure.Persistence.Tables;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 @Entity
@@ -25,8 +25,8 @@ public class TestTable {
     @Column
     private int num_of_questions;
 
-    @ManyToOne
-    @JoinColumn(name = "subject_name", table = "Subject", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subject_name", nullable = false)
     private SubjectTable subject;
 
     @Column(nullable = false)

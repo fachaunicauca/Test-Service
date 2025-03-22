@@ -7,7 +7,7 @@ import java.util.List;
 public interface ITestRepository {
     List<Test> findAll();
     Test findById(long id);
-    void save(Test test);
+    Test save(Test test);
     void delete(Test test);
     void deleteById(long id);
     boolean isPresent(long id);

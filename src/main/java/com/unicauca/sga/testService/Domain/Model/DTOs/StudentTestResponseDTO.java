@@ -2,7 +2,7 @@ package com.unicauca.sga.testService.Domain.Model.DTOs;
 
 import lombok.Data;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 @Data

@@ -13,7 +13,6 @@ public class SubjectService implements ISubjectService {
 
     private final ISubjectRepository subjectRepository;
 
-    @Autowired
     public SubjectService(ISubjectRepository subjectRepository) {
         this.subjectRepository = subjectRepository;
     }

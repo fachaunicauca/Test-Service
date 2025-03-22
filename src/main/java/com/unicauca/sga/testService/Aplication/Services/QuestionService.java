@@ -13,7 +13,6 @@ public class QuestionService implements IQuestionService {
 
     private final IQuestionRepository questionRepository;
 
-    @Autowired
     public QuestionService(IQuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
     }

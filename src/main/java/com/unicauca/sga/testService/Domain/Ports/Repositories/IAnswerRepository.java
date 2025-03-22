@@ -11,7 +11,7 @@ public interface IAnswerRepository {
     void save(Answer answer);
     void delete(Answer answer);
     void deleteById(long id);
-    List<Answer> findByQuestionId(long id);
+    List<Answer> findByQuestionId(Long question_id);
     boolean isCorrect(long id);
     boolean isPresent(long id);
 }

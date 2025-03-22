@@ -30,8 +30,8 @@ public class TestRepository implements ITestRepository {
     }
 
     @Override
-    public void save(Test test) {
-        testJpaRepository.save(testMapper.toInfra(test));
+    public Test save(Test test) {
+        return testMapper.toModel(testJpaRepository.save(testMapper.toInfra(test)));
     }
 
     @Override

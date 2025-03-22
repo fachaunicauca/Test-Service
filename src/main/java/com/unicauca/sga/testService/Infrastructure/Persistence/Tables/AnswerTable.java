@@ -1,5 +1,6 @@
 package com.unicauca.sga.testService.Infrastructure.Persistence.Tables;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -12,9 +13,9 @@ public class AnswerTable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long answer_id;
 
-    @ManyToOne
-    @JoinColumn(name = "question_id", table = "Question", nullable = false)
-    private Long question_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_id", nullable = false)
+    private QuestionTable question;
 
     @Column
     private String answer_text;

@@ -1,7 +1,11 @@
 package com.unicauca.sga.testService.Infrastructure.Persistence.Tables;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -12,12 +16,12 @@ public class QuestionTable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long question_id;
 
-    @ManyToOne
-    @JoinColumn(name = "question_topic_id", table = "QuestionTopic")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_topic_id", nullable = false)
     private QuestionTopicTable questionTopic;
 
-    @ManyToOne
-    @JoinColumn(name = "subject_name", table = "Subject", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subject_name", nullable = false)
     private SubjectTable subject;
 
     @Column
@@ -30,4 +34,6 @@ public class QuestionTable {
     @Column(columnDefinition = "LONGBLOB")
     private String question_image;
 
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<AnswerTable> answers = new ArrayList<>();
 }

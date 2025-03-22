@@ -12,13 +12,13 @@ import com.unicauca.sga.testService.Domain.Ports.Services.IAnswerService;
 import com.unicauca.sga.testService.Domain.Ports.Services.IQuestionService;
 import com.unicauca.sga.testService.Domain.Ports.Services.ISubjectService;
 import com.unicauca.sga.testService.Domain.Ports.Services.ITestService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class TakeTestService {
@@ -30,7 +30,6 @@ public class TakeTestService {
     private final ISubjectService subjectService;
     private final ITestService testService;
 
-    @Autowired
     public TakeTestService(QuestionListDTOMapper questionListDTOMapper,
                            IQuestionService questionService,
                            IAnswerService answerService,
@@ -65,7 +64,9 @@ public class TakeTestService {
         newTest.setStudent_id(student_code);
         newTest.setSubject(subject);
         newTest.setNum_of_questions(n);
-        testService.saveTest(newTest);
+        LocalDate todayLDate = LocalDate.now();
+        newTest.setTest_date(Date.valueOf(todayLDate));
+        newTest=testService.saveTest(newTest);
         //Get and return the Questions (Not random)
         List<Question> questionList = questionService.getRandomQuestionsBySubject(subject_name, n);
         return questionListDTOMapper.toDTO(newTest.getTest_id(), questionList);

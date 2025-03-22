@@ -45,8 +45,8 @@ public class AnswerRepository implements IAnswerRepository {
     }
 
     @Override
-    public List<Answer> findByQuestionId(long id) {
-        return answerJpaRepository.findByQuestionId(id).stream().map(answerMapper::toModel).collect(Collectors.toList());
+    public List<Answer> findByQuestionId(Long question_id) {
+        return answerJpaRepository.findByQuestionId(question_id).stream().map(answerMapper::toModel).collect(Collectors.toList());
     }
 
     @Override

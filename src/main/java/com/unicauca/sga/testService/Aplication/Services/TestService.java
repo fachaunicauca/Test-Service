@@ -13,7 +13,6 @@ public class TestService implements ITestService {
 
     private final ITestRepository testRepository;
 
-    @Autowired
     public TestService(ITestRepository testRepository) {
         this.testRepository = testRepository;
     }
@@ -29,8 +28,8 @@ public class TestService implements ITestService {
     }
 
     @Override
-    public void saveTest(Test test){
-        testRepository.save(test);
+    public Test saveTest(Test test){
+        return testRepository.save(test);
     }
 
     @Override
@@ -44,8 +43,8 @@ public class TestService implements ITestService {
     }
 
     @Override
-    public void updateTest(Test test){
-        testRepository.save(test);
+    public Test updateTest(Test test){
+        return testRepository.save(test);
     }
 
     @Override

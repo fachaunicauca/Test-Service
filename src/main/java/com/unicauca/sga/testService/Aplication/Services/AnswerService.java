@@ -13,7 +13,6 @@ public class AnswerService implements IAnswerService {
 
     private final IAnswerRepository answerRepository;
 
-    @Autowired
     public AnswerService(IAnswerRepository answerRepository) {
         this.answerRepository = answerRepository;
     }
