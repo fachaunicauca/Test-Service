@@ -12,9 +12,8 @@ import java.util.List;
 
 @Component
 public class QuestionListDTOMapper {
-    public QuestionListDTO toDTO(Long test_id, List<Question> questions){
+    public QuestionListDTO toDTO(List<Question> questions){
         QuestionListDTO newQuestionListDTO = new QuestionListDTO();
-        newQuestionListDTO.setTest_id(test_id);
         List<QuestionDTO> questionDTOList = new ArrayList<>();
         for(Question question: questions){
             questionDTOList.add(QuestiontoDTO(question));

@@ -14,8 +14,6 @@ import com.unicauca.sga.testService.Domain.Ports.Services.ISubjectService;
 import com.unicauca.sga.testService.Domain.Ports.Services.ITestService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.sql.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +27,8 @@ public class TakeTestService {
     private final IAnswerService answerService;
     private final ISubjectService subjectService;
     private final ITestService testService;
+
+    private final int num_of_questions = 20;
 
     public TakeTestService(QuestionListDTOMapper questionListDTOMapper,
                            IQuestionService questionService,
@@ -49,30 +49,21 @@ public class TakeTestService {
      */
     public QuestionListDTO getTestQuestions(String subject_name,
                                             Long student_code,
-                                            String teacher_name,
-                                            int n){
+                                            String teacher_name){
         //Validate that the teacher exists. Teachers Microservice call
         //Validate that the student code exists. Teachers Microservice call
         //Validate that the subject exists.
         if(!subjectService.isPresent(subject_name)){
-            return null; //TODO Exception
+            throw new IllegalArgumentException("GTQ3");
         }
-        Subject subject = subjectService.getSubjectById(subject_name);
-        //Create a new test
-        Test newTest = new Test();
-        newTest.setTeacher_name(teacher_name);
-        newTest.setStudent_id(student_code);
-        newTest.setSubject(subject);
-        newTest.setNum_of_questions(n);
-        LocalDate todayLDate = LocalDate.now();
-        newTest.setTest_date(Date.valueOf(todayLDate));
-        newTest=testService.saveTest(newTest);
+
         //Get and return the Questions (Not random)
-        List<Question> questionList = questionService.getRandomQuestionsBySubject(subject_name, n);
-        return questionListDTOMapper.toDTO(newTest.getTest_id(), questionList);
+        List<Question> questionList = questionService.getRandomQuestionsBySubject(subject_name, num_of_questions);
+        return questionListDTOMapper.toDTO(questionList);
     }
 
     public float saveTest(StudentTestResponseDTO studentTestResponseDTO){
+        /*
         //Validate that the test has been created before
         if(!testService.isPresent(studentTestResponseDTO.getTest_id())){
             throw new IllegalArgumentException("El test con id "+
@@ -86,23 +77,33 @@ public class TakeTestService {
                                                 studentTestResponseDTO.getTest_id()+
                                                 " no corresponde al test.");
         }
+
         //Validate that the student answered all the questions
         if(!(studentTestResponseDTO.getStudent_response().size() == test.getNum_of_questions())){
             throw new IllegalArgumentException("El test no está completo. Se esperaban "+
                                                 test.getNum_of_questions()+
                                                 " preguntas respondidas.");
         }
+        */
         //Score the test
-        float test_score = scoreTest(studentTestResponseDTO,test.getNum_of_questions());
-        //Update the test
-        test.setTest_date(studentTestResponseDTO.getTest_date());
-        test.setTest_score(test_score);
-        testService.updateTest(test);
+        int n = studentTestResponseDTO.getStudent_response().size();
+        float test_score = scoreTest(studentTestResponseDTO);
+        Subject subject = subjectService.getSubjectById(studentTestResponseDTO.getSubject_name());
+        //Create a new test
+        Test newTest = new Test();
+        newTest.setTeacher_name(studentTestResponseDTO.getTeacher_name());
+        newTest.setStudent_id(studentTestResponseDTO.getStudent_code());
+        newTest.setSubject(subject);
+        newTest.setNum_of_questions(n);
+        newTest.setTest_date(studentTestResponseDTO.getTest_date());
+        newTest.setTest_score(test_score);
+        
+        testService.saveTest(newTest);
         //Send the test score
         return test_score;
     }
 
-    private float scoreTest(StudentTestResponseDTO studentTestResponseDTO, int num_of_questions){
+    private float scoreTest(StudentTestResponseDTO studentTestResponseDTO){
         int correctAnswersCount = 0;
         boolean isCorrect;
         for(StudentAnswerDTO studentAnswerDTO: studentTestResponseDTO.getStudent_response()){
@@ -124,7 +125,8 @@ public class TakeTestService {
 
                     if (correctSet.equals(studentSet)) correctAnswersCount++;
                 }
-            }else{
+            }//If the answer id isn't a list, then just validate that is the correct answer
+            else{
                 isCorrect=answerService.getAnswerById(studentAnswerDTO.getAnswer_id().get(0)).isAnswer_isCorrect();
                 if(isCorrect) correctAnswersCount++;
             }
