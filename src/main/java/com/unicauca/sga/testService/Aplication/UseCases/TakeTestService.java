@@ -1,6 +1,9 @@
 package com.unicauca.sga.testService.Aplication.UseCases;
 
 import com.unicauca.sga.testService.Aplication.Mappers.QuestionListDTOMapper;
+import com.unicauca.sga.testService.Domain.Exceptions.InsufficientQuestionsException;
+import com.unicauca.sga.testService.Domain.Exceptions.NoQuestionsException;
+import com.unicauca.sga.testService.Domain.Exceptions.NotFoundException;
 import com.unicauca.sga.testService.Domain.Model.Answer;
 import com.unicauca.sga.testService.Domain.Model.DTOs.QuestionListDTO;
 import com.unicauca.sga.testService.Domain.Model.DTOs.StudentAnswerDTO;
@@ -54,47 +57,32 @@ public class TakeTestService {
         //Validate that the student code exists. Teachers Microservice call
         //Validate that the subject exists.
         if(!subjectService.isPresent(subject_name)){
-            throw new IllegalArgumentException("GTQ3");
+            throw new NotFoundException("No se encontro la materia "+subject_name+".");
         }
 
         //Get and return the Questions (Not random)
         List<Question> questionList = questionService.getRandomQuestionsBySubject(subject_name, num_of_questions);
+        if(questionList.isEmpty()) {
+            throw new NoQuestionsException("La materia " + subject_name + " no tiene preguntas asociadas.");
+        }else if(questionList.size()<num_of_questions){
+            throw new InsufficientQuestionsException("La materia " + subject_name +" no tiene la cantidad de preguntas minimas.");
+        }
         return questionListDTOMapper.toDTO(questionList);
     }
 
     public float saveTest(StudentTestResponseDTO studentTestResponseDTO){
-        /*
-        //Validate that the test has been created before
-        if(!testService.isPresent(studentTestResponseDTO.getTest_id())){
-            throw new IllegalArgumentException("El test con id "+
-                                                studentTestResponseDTO.getTest_id()+
-                                                " no ha sido creado.");
-        }
-        Test test = testService.getTestById(studentTestResponseDTO.getTest_id());
-        //Validate that the student code is correct
-        if(!(test.getStudent_id() ==studentTestResponseDTO.getStudent_code())){
-            throw new IllegalArgumentException("El codigo del estudiante "+
-                                                studentTestResponseDTO.getTest_id()+
-                                                " no corresponde al test.");
-        }
-
-        //Validate that the student answered all the questions
-        if(!(studentTestResponseDTO.getStudent_response().size() == test.getNum_of_questions())){
-            throw new IllegalArgumentException("El test no está completo. Se esperaban "+
-                                                test.getNum_of_questions()+
-                                                " preguntas respondidas.");
-        }
-        */
-        //Score the test
-        int n = studentTestResponseDTO.getStudent_response().size();
+                //Score the test
         float test_score = scoreTest(studentTestResponseDTO);
+        if(!subjectService.isPresent(studentTestResponseDTO.getSubject_name())){
+            throw new NotFoundException("No se encontro la materia "+studentTestResponseDTO.getSubject_name()+".");
+        }
         Subject subject = subjectService.getSubjectById(studentTestResponseDTO.getSubject_name());
         //Create a new test
         Test newTest = new Test();
         newTest.setTeacher_name(studentTestResponseDTO.getTeacher_name());
         newTest.setStudent_id(studentTestResponseDTO.getStudent_code());
         newTest.setSubject(subject);
-        newTest.setNum_of_questions(n);
+        newTest.setNum_of_questions(num_of_questions);
         newTest.setTest_date(studentTestResponseDTO.getTest_date());
         newTest.setTest_score(test_score);
         
@@ -112,6 +100,9 @@ public class TakeTestService {
                 List<Long> student_answers = studentAnswerDTO.getAnswer_id();
                 //Get all the question answers
                 List<Answer> answers = answerService.getAllAnswersByQuestion(studentAnswerDTO.getQuestion_id());
+                if(answers.isEmpty()){
+                    throw new NotFoundException("La pregunta con id: "+studentAnswerDTO.getQuestion_id()+" no tiene respuestas registradas.");
+                }
                 //Get the correct answers
                 List<Long> correct_answers = answers.stream()
                         .filter(Answer::isAnswer_isCorrect)
@@ -127,7 +118,11 @@ public class TakeTestService {
                 }
             }//If the answer id isn't a list, then just validate that is the correct answer
             else{
+                if(!answerService.isPresent(studentAnswerDTO.getAnswer_id().get(0))){
+                    throw new NotFoundException("La respuesta con id: "+studentAnswerDTO.getAnswer_id()+" no esta registrada.");
+                }
                 isCorrect=answerService.getAnswerById(studentAnswerDTO.getAnswer_id().get(0)).isAnswer_isCorrect();
+
                 if(isCorrect) correctAnswersCount++;
             }
         }
