@@ -60,7 +60,7 @@ public class TakeTestService {
             throw new NotFoundException("No se encontro la materia "+subject_name+".");
         }
 
-        //Get and return the Questions (Not random)
+        //Get and return the Questions by Subject
         List<Question> questionList = questionService.getRandomQuestionsBySubject(subject_name, num_of_questions);
         if(questionList.isEmpty()) {
             throw new NoQuestionsException("La materia " + subject_name + " no tiene preguntas asociadas.");
