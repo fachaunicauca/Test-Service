@@ -7,5 +7,5 @@ import java.util.List;
 @Data
 public class StudentAnswerDTO {
     private long question_id;
-    private List<Long> answer_id;
+    private List<Long> answers_ids;
 }

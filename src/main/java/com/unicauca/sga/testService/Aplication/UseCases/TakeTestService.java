@@ -96,8 +96,8 @@ public class TakeTestService {
         boolean isCorrect;
         for(StudentAnswerDTO studentAnswerDTO: studentTestResponseDTO.getStudent_response()){
             //If answer id is a list, it means that there are multiple answers
-            if(studentAnswerDTO.getAnswer_id().size()!=1) {
-                List<Long> student_answers = studentAnswerDTO.getAnswer_id();
+            if(studentAnswerDTO.getAnswers_ids().size()!=1) {
+                List<Long> student_answers = studentAnswerDTO.getAnswers_ids();
                 //Get all the question answers
                 List<Answer> answers = answerService.getAllAnswersByQuestion(studentAnswerDTO.getQuestion_id());
                 if(answers.isEmpty()){
@@ -118,10 +118,10 @@ public class TakeTestService {
                 }
             }//If the answer id isn't a list, then just validate that is the correct answer
             else{
-                if(!answerService.isPresent(studentAnswerDTO.getAnswer_id().get(0))){
-                    throw new NotFoundException("La respuesta con id: "+studentAnswerDTO.getAnswer_id()+" no esta registrada.");
+                if(!answerService.isPresent(studentAnswerDTO.getAnswers_ids().get(0))){
+                    throw new NotFoundException("La respuesta con id: "+studentAnswerDTO.getAnswers_ids()+" no esta registrada.");
                 }
-                isCorrect=answerService.getAnswerById(studentAnswerDTO.getAnswer_id().get(0)).isAnswer_isCorrect();
+                isCorrect=answerService.getAnswerById(studentAnswerDTO.getAnswers_ids().get(0)).isAnswer_isCorrect();
 
                 if(isCorrect) correctAnswersCount++;
             }
