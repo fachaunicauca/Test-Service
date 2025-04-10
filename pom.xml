@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.unicauca.sga</groupId>
-	<artifactId>testService</artifactId>
+	<artifactId>test-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>testService</name>
+	<name>test-service</name>
 	<description>This is the Test Microservice Module.</description>
 	<url/>
 	<licenses>
@@ -33,6 +33,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>me.paulschwarz</groupId>
+			<artifactId>spring-dotenv</artifactId>
+			<version>4.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -75,7 +80,6 @@
 	</dependencies>
 
 	<build>
-		<finalName>testService-api</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

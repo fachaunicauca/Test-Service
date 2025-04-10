@@ -2,6 +2,8 @@ package com.unicauca.sga.testService.Domain.Ports.Repositories;
 
 
 import com.unicauca.sga.testService.Domain.Model.Question;
+import com.unicauca.sga.testService.Domain.Model.QuestionTopic;
+import com.unicauca.sga.testService.Infrastructure.Persistence.Tables.QuestionTable;
 
 import java.util.List;
 

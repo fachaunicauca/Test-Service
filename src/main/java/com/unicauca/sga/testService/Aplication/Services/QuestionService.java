@@ -3,6 +3,7 @@ package com.unicauca.sga.testService.Aplication.Services;
 import com.unicauca.sga.testService.Domain.Model.Question;
 import com.unicauca.sga.testService.Domain.Ports.Repositories.IQuestionRepository;
 import com.unicauca.sga.testService.Domain.Ports.Services.IQuestionService;
+import com.unicauca.sga.testService.Infrastructure.Persistence.Tables.QuestionTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

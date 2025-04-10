@@ -15,6 +15,7 @@ import com.unicauca.sga.testService.Domain.Ports.Services.IAnswerService;
 import com.unicauca.sga.testService.Domain.Ports.Services.IQuestionService;
 import com.unicauca.sga.testService.Domain.Ports.Services.ISubjectService;
 import com.unicauca.sga.testService.Domain.Ports.Services.ITestService;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -50,6 +51,7 @@ public class TakeTestService {
      * the evaluation. Once, the data is validated, the exam questions
      * are returned. If the data is invalid, an exception is sent.
      */
+    @Transactional(readOnly = true)
     public QuestionListDTO getTestQuestions(String subject_name,
                                             Long student_code,
                                             String teacher_name){
